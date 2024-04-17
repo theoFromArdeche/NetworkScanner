@@ -25,7 +25,7 @@ unsigned short checksum(void *b, int len) {
     result = ~sum;
     return result;
 }
-
+ 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <IP>\n", argv[0]);
