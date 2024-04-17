@@ -8,6 +8,7 @@
 #include <netinet/ip_icmp.h>
 #include <arpa/inet.h>
 #include <errno.h>
+#include <sys/time.h>
 
 // Fonction pour calculer le checksum
 unsigned short checksum(void *b, int len) {
@@ -53,10 +54,14 @@ int main(int argc, char *argv[]) {
     icmp_hdr->un.echo.id = getpid();
     icmp_hdr->un.echo.sequence = 1;
     icmp_hdr->checksum = 0;
-    icmp_hdr->checksum = checksum(packet, sizeof(struct icmphdr) + sizeof(struct iphdr));
 
     // Ajout d'un peu de données au paquet ICMP pour simuler un vrai ping
-    size_t packet_size = sizeof(struct icmphdr) + sizeof(struct iphdr) + 56; // Taille typique du payload de ping
+    size_t packet_size = sizeof(struct icmphdr) + 56; // Taille typique du payload de ping
+
+    // Remplir le payload avec des données factices
+    memset(packet + sizeof(struct icmphdr), 'a', 56);
+
+    // Calculer le checksum sur l'ensemble du paquet ICMP, y compris le payload
     icmp_hdr->checksum = checksum(packet, packet_size);
 
     if (sendto(sockfd, packet, packet_size, 0, (struct sockaddr *)&dest, sizeof(dest)) <= 0) {
