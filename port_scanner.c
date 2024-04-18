@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
                     printf("Port %d is open\n", port);
                 }
             } else {
-                printf("Port %d is filtered\n", port);
+                //printf("Port %d is filtered\n", port);
             }
         } else if (errno == ECONNREFUSED) {
             // Port is closed
