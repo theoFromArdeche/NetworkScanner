@@ -7,7 +7,7 @@
 #include <string.h>
 
 #define BUFFER_SIZE 4096
-#define SERV_PORT 2222
+#define SERV_PORT 2223
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
             printf("%s", buffer);
             if (strcmp(message_finished, buffer)==0) break; // STOP
         }
+        printf("\n");
         continue;
     }
 }

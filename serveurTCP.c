@@ -24,7 +24,7 @@
 #endif
 
 
-#define SERV_PORT 2222
+#define SERV_PORT 2223
 #define BUFFER_SIZE 4096
 
 
@@ -269,13 +269,13 @@ int main() {
 
         token = strtok(buffer, " ");
 
-        printf("%s\n", token);
         if (strcmp(token, "IP")==0) choice=1;
         else if (strcmp(token, "PORTS")==0) choice=2;
         else {
             send(dialogSocket, message_error, strlen(message_error), 0);
             continue;
         };
+        printf("%s scan\n", token);
 
         argc=0;
         while (token != NULL && argc<5) {
@@ -296,7 +296,7 @@ int main() {
         
         
         send(dialogSocket, message_end, strlen(message_end), 0);
-        printf("FIN\n\n");
+        printf("End of scan\n\n");
 
         // ip_addr start_port end_port
         // ip_addr netmask
@@ -304,11 +304,7 @@ int main() {
         memset(buffer, 0, BUFFER_SIZE);
     }
 
-    if (bytes_received == 0) {
-        printf("Client disconnected\n");
-    } else {
-        perror("recv");
-    }
+    printf("Client disconnected\n");
 
     close(dialogSocket);
     close(serverSocket);
